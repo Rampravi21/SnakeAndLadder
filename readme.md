@@ -25,3 +25,10 @@ play function will take the currentPlayer and the index of the player in the Pla
 2) If Snake then slide down
 3) If doubles then the currentplayer will roll the dice again
 4) If a player's position goes beyond 100 then the delta between the newPosition and 100 is the new position 
+
+### run the application 
+1) Install  NodeJs with respect to Operating System
+2) open cmd prompt 
+3) run the following command 
+      node index.js 
+      
