@@ -12,17 +12,30 @@ const players = [
 
 let diceValue
 let newPosition
+let data = []
 let winnerFound = false
 
+let cnt = 0
+const noOfiterations = 100000000
 
 function play (currentPlayer, index) {
- 
+  cnt++
+  const currentPosition = currentPlayer.getCurrentPosition()
+
   // Step 1: Get the dice value
   diceValue = dice()
 
   // Step 2: Calculate the new position and set the same
   newPosition = calculatePosition(currentPlayer, diceValue)
   currentPlayer.setCurrentPosition(newPosition)
+
+  // Logging the data
+  data.push(currentPlayer.getName())
+  data.push(diceValue)
+  data.push(`Moved: ${currentPosition} --> ${newPosition}`)
+  console.log(data)
+  data = []
+  /// ///////////////////////
 
   if (newPosition === 100) {
     winnerFound = true
@@ -33,12 +46,12 @@ function play (currentPlayer, index) {
   }
 
   // Set the next Player (Fulfills Rule 3)
-  if (diceValue === 12 && !winnerFound) {
+  if (diceValue === 12 && cnt <= noOfiterations && !winnerFound) {
     play(players[index], index)
   } else {
     ++index
     index = (index > 3) ? 0 : index
-    if (!winnerFound) {
+    if (cnt <= noOfiterations && !winnerFound) {
       play(players[index], index)
     }
   }
@@ -51,7 +64,7 @@ function dice () {
 }
 
 function calculatePosition (currentPlayer, diceValue) {
-  
+  // const currentPosition = currentPlayer.getCurrentPosition()
   let newPosition = currentPlayer.getCurrentPosition() + diceValue
 
   // Rule 1:  if Ladder the slide up
@@ -141,7 +154,4 @@ function main () {
   play(players[0], 0)
 }
 
-main()  
-
-
-                      
+main()
